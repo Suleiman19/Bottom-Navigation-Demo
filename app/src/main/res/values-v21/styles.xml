@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="MyTheme" parent="Base.MyTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="MyTheme.Detail" parent="MyTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>
