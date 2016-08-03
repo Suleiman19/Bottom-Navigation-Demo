@@ -3,6 +3,7 @@ package com.grafixartist.bottomnav;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -13,9 +14,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_AUTO);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Green", R.drawable.ic_map_24dp, Color.parseColor(colors[0]));
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Red", R.drawable.ic_local_restaurant_24dp, Color.parseColor(colors[1]));
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Blue", R.drawable.ic_store_mall_directory_24dp, Color.parseColor(colors[2]));
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.tab_1), R.drawable.ic_map_24dp, Color.parseColor(colors[0]));
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.tab_2), R.drawable.ic_local_restaurant_24dp, Color.parseColor(colors[1]));
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.tab_3), R.drawable.ic_store_mall_directory_24dp, Color.parseColor(colors[2]));
 
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
@@ -66,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

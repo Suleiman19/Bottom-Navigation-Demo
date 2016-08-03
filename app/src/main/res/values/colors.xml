@@ -8,4 +8,10 @@
     <color name="bottomtab_0">#96CC7A</color>
     <color name="bottomtab_1">#EA705D</color>
     <color name="bottomtab_2">#66BBCC</color>
+
+    <color name="colorPrimaryNight">#3F51B5</color>
+    <color name="colorPrimaryDarkNight">#303F9F</color>
+    <color name="colorAccentNight">#FFC107</color>
+    <color name="bg_dark">#263238</color>
+
 </resources>
