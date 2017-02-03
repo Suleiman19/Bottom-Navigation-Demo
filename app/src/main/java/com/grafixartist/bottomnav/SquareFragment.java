@@ -1,9 +1,11 @@
 package com.grafixartist.bottomnav;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class SquareFragment extends Fragment {
+    public static final String TAG = SquareFragment.class.getSimpleName();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_COLOR = "color";
@@ -22,27 +26,12 @@ public class SquareFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int color;
 
-    CardView card;
+    private RecyclerView recyclerView;
 
     public SquareFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment SquareFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SquareFragment newInstance(int param1) {
-        SquareFragment fragment = new SquareFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLOR, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,16 +47,38 @@ public class SquareFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_square, container, false);
 
-        card = (CardView) rootView.findViewById(R.id.card);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_square_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setBackgroundColor(getLighterColor(color));
 
-        card.setCardBackgroundColor(color);
+        SimpleAdapter adapter = new SimpleAdapter(getContext());
+        recyclerView.setAdapter(adapter);
 
         return rootView;
     }
 
-    public void updateColor(int color) {
 
-        card.setCardBackgroundColor(color);
+    /**
+     * Updates {@link RecyclerView} background color upon changing Bottom Navigation item.
+     *
+     * @param color to apply to {@link RecyclerView} background.
+     */
+    public void updateColor(int color) {
+        recyclerView.setBackgroundColor(getLighterColor(color));
+    }
+
+    /**
+     * Facade to return colors at 30% opacity.
+     *
+     * @param color
+     * @return
+     */
+    private int getLighterColor(int color) {
+        return Color.argb(30,
+                Color.red(color),
+                Color.green(color),
+                Color.blue(color)
+        );
     }
 
 }
