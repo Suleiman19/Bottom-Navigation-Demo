@@ -2,6 +2,7 @@ package com.grafixartist.bottomnav;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private AHBottomNavigation bottomNavigation;
+    private boolean notificationVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavBehaviors();
         setupBottomNavStyle();
 
+        createFakeNotification();
+
         addBottomNavigationItems();
         bottomNavigation.setCurrentItem(0);
 
@@ -55,10 +60,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 fragment.updateColor(ContextCompat.getColor(MainActivity.this, colors[position]));
+
+                // remove notification badge
+                if (notificationVisible)
+                    bottomNavigation.setNotification(new AHNotification(), bottomNavigation.getItemsCount() - 1);
+
                 return true;
             }
         });
 
+    }
+
+    private void createFakeNotification() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AHNotification notification = new AHNotification.Builder()
+                        .setText("1")
+                        .setBackgroundColor(Color.YELLOW)
+                        .setTextColor(Color.BLACK)
+                        .build();
+                // Adding notification to last item.
+
+                bottomNavigation.setNotification(notification, bottomNavigation.getItemsCount() - 1);
+
+                notificationVisible = true;
+            }
+        }, 1000);
     }
 
 
