@@ -11,13 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SquareFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SquareFragment extends Fragment {
-    public static final String TAG = SquareFragment.class.getSimpleName();
+public class DummyFragment extends Fragment {
+    public static final String TAG = DummyFragment.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +23,7 @@ public class SquareFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    public SquareFragment() {
+    public DummyFragment() {
         // Required empty public constructor
     }
 

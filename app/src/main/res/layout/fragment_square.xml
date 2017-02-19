@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.grafixartist.bottomnav.SquareFragment">
+             tools:context="com.grafixartist.bottomnav.DummyFragment">
 
     <!--By default, height of Toolbar and Bottom Navigation are equal-->
     <android.support.v7.widget.RecyclerView

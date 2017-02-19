@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Bottom Navigation");
 
 
-        final SquareFragment fragment = new SquareFragment();
+        final DummyFragment fragment = new DummyFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("color", ContextCompat.getColor(this, colors[0]));
         fragment.setArguments(bundle);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frame, fragment, SquareFragment.TAG)
+                .add(R.id.frame, fragment, DummyFragment.TAG)
                 .commit();
 
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
@@ -62,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 fragment.updateColor(ContextCompat.getColor(MainActivity.this, colors[position]));
 
                 // remove notification badge
-                if (notificationVisible)
-                    bottomNavigation.setNotification(new AHNotification(), bottomNavigation.getItemsCount() - 1);
+                int lastItemPos = bottomNavigation.getItemsCount() - 1;
+                if (notificationVisible && position == lastItemPos)
+                    bottomNavigation.setNotification(new AHNotification(), lastItemPos);
 
                 return true;
             }
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Warning: Toolbar Clipping might occur. Solve this by wrapping it in a LinearLayout with a top
         View of 24dp (status bar size) height.
          */
-        bottomNavigation.setTranslucentNavigationEnabled(true);
+        bottomNavigation.setTranslucentNavigationEnabled(false);
     }
 
     /**
