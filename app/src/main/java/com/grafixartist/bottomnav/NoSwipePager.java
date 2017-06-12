@@ -12,7 +12,6 @@ import android.view.MotionEvent;
  */
 
 public class NoSwipePager extends ViewPager {
-
     private boolean enabled;
 
     public NoSwipePager(Context context, AttributeSet attrs) {
@@ -25,7 +24,6 @@ public class NoSwipePager extends ViewPager {
         if (this.enabled) {
             return super.onTouchEvent(event);
         }
-
         return false;
     }
 
@@ -34,7 +32,6 @@ public class NoSwipePager extends ViewPager {
         if (this.enabled) {
             return super.onInterceptTouchEvent(event);
         }
-
         return false;
     }
 

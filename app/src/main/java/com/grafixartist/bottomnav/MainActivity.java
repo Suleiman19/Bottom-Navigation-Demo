@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTabSelected(int position, boolean wasSelected) {
 //                fragment.updateColor(ContextCompat.getColor(MainActivity.this, colors[position]));
 
-                viewPager.setCurrentItem(position);
+                if (!wasSelected)
+                    viewPager.setCurrentItem(position);
 
                 // remove notification badge
                 int lastItemPos = bottomNavigation.getItemsCount() - 1;
