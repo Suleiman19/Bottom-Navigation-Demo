@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -18,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
     private final int[] colors = {R.color.bottomtab_0, R.color.bottomtab_1, R.color.bottomtab_2};
 
     private Toolbar toolbar;
+    private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
+    private BottomBarAdapter pagerAdapter;
+
     private boolean notificationVisible = false;
 
     @Override
@@ -36,15 +40,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Bottom Navigation");
 
 
-        final DummyFragment fragment = new DummyFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("color", ContextCompat.getColor(this, colors[0]));
-        fragment.setArguments(bundle);
+        setupViewPager();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.frame, fragment, DummyFragment.TAG)
-                .commit();
+
+//        final DummyFragment fragment = new DummyFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("color", ContextCompat.getColor(this, colors[0]));
+//        fragment.setArguments(bundle);
+
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.frame, fragment, DummyFragment.TAG)
+//                .commit();
 
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
         setupBottomNavBehaviors();
@@ -59,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
-                fragment.updateColor(ContextCompat.getColor(MainActivity.this, colors[position]));
+//                fragment.updateColor(ContextCompat.getColor(MainActivity.this, colors[position]));
+
+                viewPager.setCurrentItem(position);
 
                 // remove notification badge
                 int lastItemPos = bottomNavigation.getItemsCount() - 1;
@@ -70,6 +79,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setupViewPager() {
+        viewPager = (NoSwipePager) findViewById(R.id.viewpager);
+        viewPager.setPagingEnabled(false);
+        pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
+
+        pagerAdapter.addFragments(createFragment(R.color.bottomtab_0));
+        pagerAdapter.addFragments(createFragment(R.color.bottomtab_1));
+        pagerAdapter.addFragments(createFragment(R.color.bottomtab_2));
+
+        viewPager.setAdapter(pagerAdapter);
+    }
+
+    @NonNull
+    private DummyFragment createFragment(int color) {
+        DummyFragment fragment = new DummyFragment();
+        fragment.setArguments(passFragmentArguments(fetchColor(color)));
+        return fragment;
+    }
+
+    @NonNull
+    private Bundle passFragmentArguments(int color) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("color", color);
+        return bundle;
     }
 
     private void createFakeNotification() {
